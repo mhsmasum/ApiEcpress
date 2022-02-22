@@ -22,16 +22,21 @@ Category.CreateNew = function(newCategory , result  ){
           }
     });
     
-    // if(err) {
-    //     console.log("error: ", err);
-    //     result(err, null);
-    //   }
-    //   else{
-    //     console.log("category created: ", newCategory);
-    //     result(null, newCategory);
-    //   }
-
+  
     
 
+},
+Category.GetAll =  function(result){
+
+  dbConn.query("Select * from category", function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+     
+      result(null, res);
+    }
+    });
 }
 module.exports = Category;

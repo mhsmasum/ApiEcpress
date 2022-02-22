@@ -1,21 +1,10 @@
 
 
 const Category = require('../models/category.model');
-const multer  = require('multer');
 
-const storage = multer.diskStorage({
-    destination:  (req, file, cb) => {
-      console.dir(file);
-      cb (null, 'uploads/');  
-    },
-    filename: (req, file, cb) => {
-    console.log(new Date())
-      cb(null, file.fieldname + '-' + Date.now() + '.jpg');
-    }
-    
-  });
 
-  const upload = multer({storage});
+
+
 
     module.exports = {
         //test method
@@ -25,10 +14,8 @@ const storage = multer.diskStorage({
         createnew : function(req, res ) {
 
              
-                // console.log(req.body.name);
-                // console.log(req.file);
-                console.log(req.file);
-              const newCategory = new Category({name:req.body.name , description:req.body.description , imageUrl:req.file.path});
+               
+            const newCategory = new Category({name:req.body.name , description:req.body.description , imageUrl:req.file.path.replace('\\','/')});
               
             Category.CreateNew( newCategory, function(err, data){
 
@@ -41,11 +28,24 @@ const storage = multer.diskStorage({
                     // res.status(200).send(data);
                     
                     //upload.single('image'),
-                    
+                     
+                      console.log('data' ,data);
                       res.status(200).json({'success' : true, 'result': newCategory})
                  
                 }
             });
             
+        },
+
+        getAll: function( req, res) {
+         Category.GetAll(function(err, data){
+              if(err){
+                  res.status(500).send(err);
+              }
+              else{
+                  res.status(200).send(data);
+              }
+         });
+         
         }
     }

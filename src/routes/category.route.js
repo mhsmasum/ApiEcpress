@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
       cb (null, 'uploads/');  
     },
     filename: (req, file, cb) => {
-        console.log(file.originalname);
+       
       cb(null, file.originalname+'-'+Date.now()+'.jpg');
     }
     
@@ -20,7 +20,9 @@ router.get('/' ,function (req  , res) {
     res.send('Hello World');
 });
 router.get('/test' , categoryController.test); 
+ 
 router.post('/create' , upload.single('image'), categoryController.createnew);   
+router.get('/getall' , categoryController.getAll); 
 // router.post('/create' , upload.single('image'),function (req  , res) {
 //     // console.dir(req);
 //     // const file = req.files.file;

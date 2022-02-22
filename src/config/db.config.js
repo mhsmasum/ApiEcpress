@@ -8,8 +8,10 @@ const dbConn = mysql.createConnection({
 });
 dbConn.connect(function(err) {
   if (err) {
-    console.log(err)
-  };
-  console.log("Database Connected!");
+    console.log(err);
+  }
+  else{
+    console.log("Database Connected!");
+  }
 });
 module.exports = dbConn;
